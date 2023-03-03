@@ -9,3 +9,34 @@ Planning to use:
 4)Formik or react-hook-form + yup;
 
 to be updated...
+
+File structure
+
+scr
+*api
+--instance Axios
+*pages
+--layout (main page (Header + sidebar + Routing))
+--login
+--signUp
+--index.js (prepared + exported router to the main Entry point)
+*modules
+--loginForm
+--signUpForm
+--header
+--sidebar
+--mainTaskBoard
+--categoryTaskBoard
+--userProfile
+*components
+--createTask
+--editTask
+--taskStatistics
+--todaysInfo
+--taskCard
+\*ui
+--logo
+--button
+--subTitle
+--input
+--checkbox
