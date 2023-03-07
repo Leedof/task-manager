@@ -3,8 +3,19 @@ import { AuthHeader } from "./AuthHeader";
 import { AuthMain } from "./AuthMain";
 import { AuthFooter } from "./AuthFooter";
 import { useAuth } from "../../../hooks";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthPage = ({ isLogin }) => {
+  const { isAuth } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
+
   return (
     <Container
       sx={{

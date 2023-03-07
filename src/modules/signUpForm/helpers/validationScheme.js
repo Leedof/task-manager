@@ -1,13 +1,14 @@
 //to be separated
 import * as yup from "yup";
 export const schema = yup.object({
-  login: yup.string().required("Required field"),
+  email: yup.string().required("Required field"),
   password: yup
     .string()
     .min(6, "Min length 6 symbols")
+    .max(16, "Max length 16symbols")
     .required("Required field"),
   confirmPassword: yup
     .string()
-    .required("Please confirm your password.")
-    .oneOf([yup.ref("password")], "Your passwords do not match."),
+    .oneOf([yup.ref("password")], "Your passwords do not match.")
+    .required("Please confirm your password."),
 });

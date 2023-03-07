@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../helpers/validationScheme";
 // UI
@@ -8,18 +9,20 @@ import { FormInputText } from "../../../../components/FormInputText";
 import { FormInputPass } from "../../../../components/FormInputPass";
 import { PrimaryBtn } from "./../../../../UI/PrimaryBtn";
 import { RouterLink } from "../../../../UI/RouterLink";
+import { signIn } from "../../../../store/app/thunks";
 
 export const LoginForm = () => {
+  const dispatch = useDispatch();
   const { control, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      login: "",
+      email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({ email, password }) => {
+    dispatch(signIn({ email, password }));
   };
 
   return (
@@ -29,7 +32,7 @@ export const LoginForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
       >
-        <FormInputText label="Login" name="login" control={control} />
+        <FormInputText label="Email" name="email" control={control} />
         <FormInputPass label="Password" name="password" control={control} />
         <PrimaryBtn variant="contained" type="submit">
           Login

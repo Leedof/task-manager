@@ -7,7 +7,9 @@ import {
 
 import Layout from "./layout";
 import { AuthPage } from "./auth";
-import { defaultTheme } from "./../assets/defaultTheme";
+import { useDispatch, useSelector } from "react-redux";
+import { authMe, selectIsInitialized } from "../store";
+import { useEffect } from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,8 +27,13 @@ const router = createBrowserRouter(
 );
 
 const Routing = () => {
-  console.log(defaultTheme);
-  return <RouterProvider router={router} />;
+  const isInit = useSelector(selectIsInitialized);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(authMe());
+  }, [dispatch]);
+
+  return isInit ? <RouterProvider router={router} /> : <div>Loading...</div>;
 };
 
 export default Routing;
