@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 
 import Layout from "./layout";
-import Login from "./login";
-import SignUp from "./signUp";
+import { LoginPage } from "./login";
+import { SignUpPage } from "./signUp";
 
 import { defaultTheme } from "./../assets/defaultTheme";
 
@@ -19,8 +19,8 @@ const router = createBrowserRouter(
         <Route path="board" element={<div>TASKS</div>} />
         <Route path="profile" element={<div>profile</div>} />
       </Route>
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<SignUp />} />
+      <Route path="login" element={<LoginPage />} />
+      <Route path="register" element={<SignUpPage />} />
       <Route path="*" element={<div>Page not found 404</div>} />
     </Route>
   )

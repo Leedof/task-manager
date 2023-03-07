@@ -1,1 +1,1 @@
-export { SignUpPage as default } from "./components/SignUpPage/SignUpPage";
+export { SignUpPage } from "./components/signUpPage/SignUpPage";

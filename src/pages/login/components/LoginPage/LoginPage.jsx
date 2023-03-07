@@ -21,13 +21,17 @@ export const LoginPage = () => {
         flexGrow={1}
         sx={{ alignContent: "center" }}
       >
-        <Grid item xs={6} sx={{ display: { xs: "none", md: "block" } }}>
-          <Logo />
+        <Grid
+          item
+          xs={5}
+          sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+        >
+          <Logo sx={{ width: "100%" }} />
         </Grid>
         <Grid
           item
           xs={12}
-          md={6}
+          md={7}
           sx={{
             display: "flex",
             justifyContent: "center",
