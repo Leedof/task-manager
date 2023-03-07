@@ -4,6 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Routing from "./pages";
 import { ThemeProvider } from "@mui/material";
 import { defaultTheme } from "./assets/defaultTheme";
+import "./firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
