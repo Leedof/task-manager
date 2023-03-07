@@ -1,27 +1,14 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-//to be separated
-import * as yup from "yup";
-
-import { SectionTitle } from "../../../../UI/SectionTitle";
+import { schema } from "../../helpers/validationScheme";
+//UI
 import { PrimaryBtn } from "../../../../UI/PrimaryBtn";
 import { FormInputText } from "../../../../components/FormInputText";
 import { FormInputPass } from "../../../../components/FormInputPass";
 import { RouterLink } from "../../../../UI/RouterLink";
-
-const schema = yup.object({
-  login: yup.string().required("Required field"),
-  password: yup
-    .string()
-    .min(6, "Min length 6 symbols")
-    .required("Required field"),
-  confirmPassword: yup
-    .string()
-    .required("Please confirm your password.")
-    .oneOf([yup.ref("password")], "Your passwords do not match."),
-});
+import { FormWrapperAuth } from "./../../../../components/FormWrapperAuth";
 
 export const SignUpForm = () => {
   const { control, handleSubmit, formState } = useForm({
@@ -38,11 +25,7 @@ export const SignUpForm = () => {
   };
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ padding: 2.5, width: { xs: "90%", sm: "70%", md: "350px" } }}
-    >
-      <SectionTitle sx={{ textAlign: "center", mb: 2.5 }}>Sign up</SectionTitle>
+    <FormWrapperAuth title="Sign up">
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -63,6 +46,6 @@ export const SignUpForm = () => {
           Already have an account? <RouterLink to="/login">Sign in</RouterLink>
         </Typography>
       </Box>
-    </Paper>
+    </FormWrapperAuth>
   );
 };

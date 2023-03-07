@@ -1,5 +1,5 @@
 import { Toolbar } from "@mui/material";
-import { Logo } from "../../UI/Logo";
+import { Logo } from "../../../UI/Logo";
 export const AuthHeader = () => {
   return (
     <Toolbar
