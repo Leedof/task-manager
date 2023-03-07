@@ -1,17 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import CssBaseline from "@mui/material/CssBaseline";
+// Auth
+import "./firebase";
+// Store
+import { Provider } from "react-redux";
+import { store } from "./store";
+// Routing
 import Routing from "./pages";
+// UI
+import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material";
 import { defaultTheme } from "./assets/defaultTheme";
-import "./firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <Routing />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <Routing />
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );

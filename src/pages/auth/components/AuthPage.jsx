@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import { AuthHeader } from "./AuthHeader";
 import { AuthMain } from "./AuthMain";
 import { AuthFooter } from "./AuthFooter";
+import { useAuth } from "../../../hooks";
 
 export const AuthPage = ({ isLogin }) => {
   return (
