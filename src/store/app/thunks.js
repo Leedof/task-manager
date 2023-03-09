@@ -15,8 +15,9 @@ export const signIn = createAsyncThunk(
           isAuth: true,
         })
       );
+      return { status: "Success" };
     } catch (error) {
-      console.log(error);
+      return { status: error.message };
     }
   }
 );
@@ -34,8 +35,9 @@ export const signUp = createAsyncThunk(
           isAuth: true,
         })
       );
+      return { status: "Success" };
     } catch (error) {
-      console.log(error);
+      return { status: error.message };
     }
   }
 );

@@ -12,7 +12,9 @@ export const AuthPage = ({ isLogin }) => {
 
   useEffect(() => {
     if (isAuth) {
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   }, [isAuth, navigate]);
 
