@@ -5,6 +5,8 @@ import { signUp } from "../../../../store/app/thunks";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../../helpers/validationScheme";
 import { handleErrorMsg } from "./../../helpers/errorMsgHandler";
+//API
+import { setUserDB } from "../../api/setUserDB";
 //UI
 import { PrimaryBtn } from "../../../../UI/PrimaryBtn";
 import { FormInputText } from "../../../../components/FormInputText";
@@ -30,8 +32,13 @@ export const SignUpForm = () => {
   });
 
   const onSubmit = async ({ email, password }) => {
-    const { status } = await dispatch(signUp({ email, password })).unwrap();
-    if (status !== "Success") {
+    const { status, uid } = await dispatch(
+      signUp({ email, password })
+    ).unwrap();
+    if (status === "Success") {
+      //await handler to set to db
+      await setUserDB(uid, email);
+    } else {
       setError("root.serverError", { status: handleErrorMsg(status) });
     }
   };
