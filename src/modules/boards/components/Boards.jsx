@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { boards } from "../constants/boards";
 import { NavList } from "../../../components/NavList";
 
-export const Boards = () => {
+export const Boards = ({ handleDrawerToggle }) => {
   return (
     <Box component="nav">
       <Typography
@@ -20,7 +20,7 @@ export const Boards = () => {
         Boards
       </Typography>
 
-      <NavList boards={boards} />
+      <NavList boards={boards} handleDrawerToggle={handleDrawerToggle} />
     </Box>
   );
 };
