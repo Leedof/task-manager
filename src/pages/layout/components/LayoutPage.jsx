@@ -25,7 +25,7 @@ export const LayoutPage = () => {
     <Box>
       <Header handleDrawerToggle={handleDrawerToggle} />
       <Navbar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
-      <Outlet />
+      {/* <Outlet /> */}
     </Box>
   );
 };

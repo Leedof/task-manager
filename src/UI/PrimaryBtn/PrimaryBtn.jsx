@@ -10,6 +10,6 @@ export const PrimaryBtn = styled(Button)(({ theme }) => {
     fontWeight: 600,
     fontSize: pxToRem(16),
     lineHeight: 1.37,
-    letterSpacing: "0.01em",
+    letterSpacing: "0.04em",
   };
 });

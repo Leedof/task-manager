@@ -2,8 +2,12 @@ import { Drawer, Toolbar } from "@mui/material";
 import { Logo } from "./../../../../UI/Logo/Logo";
 import { Boards } from "../../../../modules/boards";
 import { SingOutBtn } from "../../../../UI/SingOutBtn/SingOutBtn";
+import { signOut } from "../../../../store";
+import { useDispatch } from "react-redux";
 
 export const Navbar = ({ mobileOpen, handleDrawerToggle }) => {
+  const dispatch = useDispatch();
+
   const drawer = (
     <>
       <Toolbar
@@ -17,7 +21,11 @@ export const Navbar = ({ mobileOpen, handleDrawerToggle }) => {
         <Logo sx={{ display: "flex", height: "100%" }} />
       </Toolbar>
       <Boards handleDrawerToggle={handleDrawerToggle} />
-      <SingOutBtn />
+      <SingOutBtn
+        onClickHandler={() => {
+          dispatch(signOut());
+        }}
+      />
     </>
   );
   return (
