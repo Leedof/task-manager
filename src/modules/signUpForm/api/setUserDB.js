@@ -1,5 +1,6 @@
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { boards } from "../constants/defaultBoards";
 
 export const setUserDB = async (uid, email) => {
   try {
@@ -10,9 +11,12 @@ export const setUserDB = async (uid, email) => {
       lastName: "Surname",
     });
     // Сreate collection Boards and add 'home' board by default
-    await setDoc(doc(db, "users", uid, "boards", "home"), {
-      totalCount: 1,
-    });
+    for (const board of boards) {
+      await setDoc(doc(db, "users", uid, "boards", board), {
+        totalCount: board === "home" ? 1 : 0,
+      });
+    }
+
     // Create example task in 'home' board
     await setDoc(doc(db, "users", uid, "boards", "home", "tasks", "example"), {
       title: "Create new task today",

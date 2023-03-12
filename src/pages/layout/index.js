@@ -1,1 +1,1 @@
-export { LayoutPage as default } from "./components/LayoutPage/LayoutPage";
+export { LayoutPage } from "./components/LayoutPage";
