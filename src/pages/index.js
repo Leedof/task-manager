@@ -13,12 +13,11 @@ import { useEffect } from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/">
+    <Route>
       <Route path="/" element={<LayoutPage />}>
-        <Route path="home" element={<div>Main bord</div>} />
-        <Route path="health" element={<div>TASKS</div>} />
-        <Route path="business" element={<div>profile</div>} />
-        <Route path="education" element={<div>profile</div>} />
+        <Route path="health" element={<LayoutPage />} />
+        <Route path="business" element={<LayoutPage />} />
+        <Route path="education" element={<LayoutPage />} />
       </Route>
       <Route path="login" element={<AuthPage isLogin={true} />} />
       <Route path="register" element={<AuthPage isLogin={false} />} />

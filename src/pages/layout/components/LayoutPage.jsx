@@ -1,15 +1,14 @@
-import { Box, Button } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { Box } from "@mui/material";
+
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../../hooks";
-import { signOut } from "../../../store/app/thunks";
+
 import { Header } from "./Header/Header";
 //UI
 import { Navbar } from "./Navbar/Navbar";
 import { useState } from "react";
 
 export const LayoutPage = () => {
-  const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -25,7 +24,17 @@ export const LayoutPage = () => {
     <Box>
       <Header handleDrawerToggle={handleDrawerToggle} />
       <Navbar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
-      {/* <Outlet /> */}
+      <Box
+        component="main"
+        sx={{
+          width: { sm: "calc(100% - 180px)", md: "calc(100% - 230px)" },
+          ml: { sm: "180px", md: "230px" },
+          pt: { xs: "70px", md: "94px" },
+          px: { xs: 2, sm: 3, md: 5, lg: 6, xl: 8 },
+        }}
+      >
+        Always the same
+      </Box>
     </Box>
   );
 };

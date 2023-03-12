@@ -14,6 +14,7 @@ export const Header = ({ handleDrawerToggle }) => {
       sx={{
         width: { sm: "calc(100% - 180px)", md: "calc(100% - 230px)" },
         ml: { sm: "180px", md: "230px" },
+        px: { xs: 2, sm: 3, md: 5, lg: 6, xl: 8 },
       }}
       color="transparent"
       elevation={0}
@@ -23,7 +24,9 @@ export const Header = ({ handleDrawerToggle }) => {
           minHeight: { xs: "64px", md: "94px" },
           display: "flex",
           justifyContent: "space-between",
+          gap: "20px",
         }}
+        disableGutters
       >
         <IconButton
           size="large"
@@ -43,7 +46,10 @@ export const Header = ({ handleDrawerToggle }) => {
         >
           Create task
         </PrimaryBtn>
-        <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
+        <Typography
+          variant="h6"
+          sx={{ display: { xs: "none", sm: "block" }, overflowX: "auto" }}
+        >
           {makeUsername(email)}
         </Typography>
       </Toolbar>

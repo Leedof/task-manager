@@ -7,7 +7,7 @@ export const boards = [
   {
     title: "Home",
     icon: <HomeOutlinedIcon />,
-    to: "/home",
+    to: "/",
   },
   {
     title: "Health",
