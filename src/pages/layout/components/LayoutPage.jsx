@@ -1,12 +1,13 @@
 import { Box } from "@mui/material";
 
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../../hooks";
 
 import { Header } from "./Header/Header";
 //UI
 import { Navbar } from "./Navbar/Navbar";
 import { useState } from "react";
+import { Board } from "../../../modules/board";
 
 export const LayoutPage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -33,7 +34,7 @@ export const LayoutPage = () => {
           px: { xs: 2, sm: 3, md: 5, lg: 6, xl: 8 },
         }}
       >
-        Always the same
+        <Board />
       </Box>
     </Box>
   );

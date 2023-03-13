@@ -22,6 +22,7 @@ export const setUserDB = async (uid, email) => {
       title: "Create new task today",
       description: "Create new task today!",
       completed: false,
+      created: new Date(),
       deadline: new Date(Date.now() + 1000 * 60 * 60 * 24),
     });
   } catch (error) {
