@@ -1,6 +1,21 @@
 import { createTheme } from "@mui/material/styles";
 
 export const defaultTheme = createTheme({
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "& fieldset": {
+            transition: "border-color 200ms",
+          },
+          "&:hover fieldset": {
+            border: `2px solid `,
+            borderColor: "rgba(41, 161, 156, 1)!important",
+          },
+        },
+      },
+    },
+  },
   typography: {
     fontFamily: "Nunito",
     button: { textTransform: "none" },

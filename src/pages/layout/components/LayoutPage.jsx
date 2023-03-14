@@ -8,9 +8,13 @@ import { Header } from "./Header/Header";
 import { Navbar } from "./Navbar/Navbar";
 import { useState } from "react";
 import { Board } from "../../../modules/board";
+import { CreateTask } from "../../../modules/createTask";
 
 export const LayoutPage = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [modalOpen, setOpenModel] = useState(false);
+  const handleModalClose = () => setOpenModel(false);
+  const handleModalOpen = () => setOpenModel(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -23,7 +27,11 @@ export const LayoutPage = () => {
 
   return (
     <Box>
-      <Header handleDrawerToggle={handleDrawerToggle} />
+      <CreateTask modalOpen={modalOpen} handleModalClose={handleModalClose} />
+      <Header
+        handleDrawerToggle={handleDrawerToggle}
+        handleModalOpen={handleModalOpen}
+      />
       <Navbar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
       <Box
         component="main"

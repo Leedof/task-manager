@@ -1,11 +1,9 @@
 import { useController } from "react-hook-form";
 import { useState } from "react";
-
-import { IconButton, InputAdornment } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { StyledTextField } from "../../UI/StyledTextField";
 
-export const FormInputPass = ({ label, name, control }) => {
+export const FormInputPass = ({ label, name, control, ...props }) => {
   const { field, fieldState } = useController({ name, control });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -15,7 +13,9 @@ export const FormInputPass = ({ label, name, control }) => {
   };
 
   return (
-    <StyledTextField
+    <TextField
+      variant="outlined"
+      fullWidth={true}
       //Default hook-form props
       onChange={field.onChange}
       onBlur={field.onBlur}
@@ -46,6 +46,7 @@ export const FormInputPass = ({ label, name, control }) => {
             }
           : null
       }
+      {...props}
     />
   );
 };

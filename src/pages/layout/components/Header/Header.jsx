@@ -6,7 +6,7 @@ import { makeUsername } from "./../../helpers/makeUsername";
 import { useSelector } from "react-redux";
 import { selectEmail } from "../../../../store";
 
-export const Header = ({ handleDrawerToggle }) => {
+export const Header = ({ handleDrawerToggle, handleModalOpen }) => {
   const email = useSelector(selectEmail);
   return (
     <AppBar
@@ -42,6 +42,7 @@ export const Header = ({ handleDrawerToggle }) => {
         <PrimaryBtn
           variant="contained"
           startIcon={<AddCircleOutlineOutlinedIcon />}
+          onClick={handleModalOpen}
           sx={{ flex: "0 0 160px" }}
         >
           Create task

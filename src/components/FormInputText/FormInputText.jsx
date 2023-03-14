@@ -1,11 +1,14 @@
 import { useController } from "react-hook-form";
-import { StyledTextField } from "../../UI/StyledTextField";
 
-export const FormInputText = ({ label, name, control }) => {
+import { TextField } from "@mui/material";
+
+export const FormInputText = ({ label, name, control, ...props }) => {
   const { field, fieldState } = useController({ name, control });
 
   return (
-    <StyledTextField
+    <TextField
+      variant="outlined"
+      fullWidth={true}
       //Default hook-form props
       onChange={field.onChange}
       onBlur={field.onBlur}
@@ -16,6 +19,7 @@ export const FormInputText = ({ label, name, control }) => {
       error={!!fieldState.error}
       helperText={fieldState?.error ? fieldState.error.message : ""}
       label={label}
+      {...props}
     />
   );
 };
