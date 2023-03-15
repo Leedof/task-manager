@@ -10,8 +10,8 @@ export const TaskList = ({ tasks, title, updateTask, deleteTask }) => {
         {tasks.length
           ? tasks.map((task) => (
               <Task
-                task={task}
                 key={task.id}
+                task={task}
                 updateTask={updateTask}
                 deleteTask={deleteTask}
               />

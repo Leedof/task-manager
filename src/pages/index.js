@@ -1,5 +1,6 @@
 import {
   createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -7,11 +8,13 @@ import {
 
 import { LayoutPage } from "./layout";
 import { AuthPage } from "./auth";
+import { NotFound } from "./notFound";
 import { useDispatch, useSelector } from "react-redux";
 import { authMe, selectIsInitialized } from "../store";
 import { useEffect } from "react";
+import { Loader } from "./../UI/Loader";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<LayoutPage />}>
@@ -21,7 +24,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="login" element={<AuthPage isLogin={true} />} />
       <Route path="register" element={<AuthPage isLogin={false} />} />
-      <Route path="*" element={<div>Page not found 404</div>} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
@@ -33,7 +36,7 @@ const Routing = () => {
     dispatch(authMe());
   }, [dispatch]);
 
-  return isInit ? <RouterProvider router={router} /> : <div>Loading...</div>;
+  return isInit ? <RouterProvider router={router} /> : <Loader />;
 };
 
 export default Routing;

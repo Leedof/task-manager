@@ -5,8 +5,8 @@ import {
 } from "../../../api/todosApi";
 import { Paper } from "@mui/material";
 import { TaskList } from "../../../components/TaskList";
-import { useUid } from "./../../../hooks";
-import { useBoard } from "./../../../hooks";
+import { useUid, useBoard } from "./../../../hooks";
+import { Loader } from "../../../UI/Loader";
 
 export const Board = () => {
   const uid = useUid();
@@ -22,7 +22,7 @@ export const Board = () => {
   const [deleteTask] = useDeleteTaskMutation();
   //LOADING
   if (isLoading) {
-    return <p>LOADING...</p>;
+    return <Loader />;
   }
 
   //HELPERS
