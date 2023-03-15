@@ -11,14 +11,8 @@ import { Board } from "../../../modules/board";
 import { CreateTask } from "../../../modules/createTask";
 
 export const LayoutPage = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [modalOpen, setOpenModel] = useState(false);
-  const handleModalClose = () => setOpenModel(false);
-  const handleModalOpen = () => setOpenModel(true);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const [mobileNavbar, setMobileNavbar] = useState(false);
+  const [modalCreateTask, setModalCreateTask] = useState(false);
 
   const { isAuth } = useAuth();
   if (!isAuth) {
@@ -27,12 +21,15 @@ export const LayoutPage = () => {
 
   return (
     <Box>
-      <CreateTask modalOpen={modalOpen} handleModalClose={handleModalClose} />
-      <Header
-        handleDrawerToggle={handleDrawerToggle}
-        handleModalOpen={handleModalOpen}
+      <CreateTask
+        modalCreateTask={modalCreateTask}
+        setModalCreateTask={setModalCreateTask}
       />
-      <Navbar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
+      <Header
+        setModalCreateTask={setModalCreateTask}
+        setMobileNavbar={setMobileNavbar}
+      />
+      <Navbar mobileNavbar={mobileNavbar} setMobileNavbar={setMobileNavbar} />
       <Box
         component="main"
         sx={{

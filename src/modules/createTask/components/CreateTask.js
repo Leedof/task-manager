@@ -1,17 +1,30 @@
+//Hooks
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useUid, useBoard } from "./../../../hooks";
+//helpers
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../helpers/validationScheme";
+import dayjs from "dayjs";
+//API
+import { useAddTaskMutation } from "../../../api/todosApi";
+//UI
 import { Box, Dialog, Typography } from "@mui/material";
 import { CloseBtn } from "../../../UI/CloseBtn";
 import { FormInputText } from "../../../components/FormInputText";
 import { PrimaryBtn } from "../../../UI/PrimaryBtn";
 import { FormDatePicker } from "../../../components/FormDatePicker";
 import { FormSelect } from "../../../components/FormSelect/FormSelect";
-import { useEffect } from "react";
-import { useBoard } from "../../../hooks";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "../helpers/validationScheme";
-import dayjs from "dayjs";
-export const CreateTask = ({ modalOpen, handleModalClose }) => {
+import { FormError } from "../../../components/FormError";
+
+export const CreateTask = ({ modalCreateTask, setModalCreateTask }) => {
+  const handlerCloseModalCreateTask = () => {
+    setModalCreateTask(false);
+  };
+  //Get current location data
+  const uid = useUid();
   const { board } = useBoard();
+  const [addTask, result] = useAddTaskMutation();
 
   const { control, handleSubmit, reset, setValue } = useForm({
     resolver: yupResolver(schema),
@@ -19,18 +32,28 @@ export const CreateTask = ({ modalOpen, handleModalClose }) => {
       title: "",
       description: "",
       board: board,
-      deadline: dayjs().add(1, "day").startOf("day"),
+      deadline: dayjs().add(1, "day").startOf("day").add(1, "second"),
     },
   });
 
   const onSubmit = async (values) => {
+    //Prepare data to fetch
     const taskData = {
       title: values.title,
       description: values.description,
       deadline: values.deadline.toDate(),
       created: new Date(),
     };
-    console.log(taskData);
+    const currentBoard = values.board.toLowerCase();
+    //fetch
+    await addTask({ uid, board: currentBoard, taskData });
+
+    reset({
+      title: "",
+      desctiption: "",
+    });
+    result.reset();
+    handlerCloseModalCreateTask();
   };
 
   useEffect(() => {
@@ -39,7 +62,7 @@ export const CreateTask = ({ modalOpen, handleModalClose }) => {
 
   return (
     <Dialog
-      open={modalOpen}
+      open={modalCreateTask}
       PaperProps={{ sx: { width: { xs: "90%" }, maxWidth: "900px" } }}
     >
       <Box component="form" sx={{ p: 2 }} onSubmit={handleSubmit(onSubmit)}>
@@ -65,7 +88,7 @@ export const CreateTask = ({ modalOpen, handleModalClose }) => {
             color="error"
             sx={{ p: 1, flex: "0 0 44px" }}
             onClick={() => {
-              handleModalClose();
+              handlerCloseModalCreateTask();
               reset({
                 title: "",
                 desctiption: "",
@@ -109,7 +132,19 @@ export const CreateTask = ({ modalOpen, handleModalClose }) => {
             Save
           </PrimaryBtn>
         </Box>
+        <FormError
+          isSubmitting={result.isLoading}
+          isSubmitSuccessful={result.isSuccess}
+          error={result.isError && "Ops, error :("}
+        />
       </Box>
+      <button
+        onClick={() => {
+          result.reset();
+        }}
+      >
+        reset
+      </button>
     </Dialog>
   );
 };

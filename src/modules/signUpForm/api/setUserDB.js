@@ -12,9 +12,7 @@ export const setUserDB = async (uid, email) => {
     });
     // Сreate collection Boards and add 'home' board by default
     for (const board of boards) {
-      await setDoc(doc(db, "users", uid, "boards", board), {
-        totalCount: board === "home" ? 1 : 0,
-      });
+      await setDoc(doc(db, "users", uid, "boards", board), {});
     }
 
     // Create example task in 'home' board

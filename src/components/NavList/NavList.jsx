@@ -1,7 +1,7 @@
 import { List, ListItem } from "@mui/material";
 import { NavListItem } from "./../../UI/NavListItem";
 
-export const NavList = ({ boards, handleDrawerToggle }) => {
+export const NavList = ({ boards, handlerCloseMobileNavbar }) => {
   return (
     <List disablePadding>
       {boards.map((board) => (
@@ -12,7 +12,7 @@ export const NavList = ({ boards, handleDrawerToggle }) => {
             "&:not(:last-child)": { mb: 3.75 },
             "&:last-child": { mb: 10 },
           }}
-          onClick={handleDrawerToggle}
+          onClick={handlerCloseMobileNavbar}
         >
           <NavListItem to={board.to} title={board.title} icon={board.icon} />
         </ListItem>

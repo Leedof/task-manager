@@ -1,24 +1,22 @@
-import { useLocation } from "react-router-dom";
 import { useGetTasksQuery } from "../../../api/todosApi";
-import { useSelector } from "react-redux";
-import { selectUid } from "../../../store";
 import { Paper } from "@mui/material";
 import { TaskList } from "../../../components/TaskList";
+import { useUid } from "./../../../hooks";
+import { useBoard } from "./../../../hooks";
 
 export const Board = () => {
-  const uid = useSelector(selectUid);
+  const uid = useUid();
   //Get current board
-  const location = useLocation();
-  let currentBoard =
-    location.pathname === "/" ? "home" : location.pathname.slice(1);
+  const { path } = useBoard();
+
   //Fetch data per board
-  const { data, isLoading } = useGetTasksQuery({
+  const { data, isFetching } = useGetTasksQuery({
     uid: uid,
-    board: currentBoard,
+    board: path,
   });
 
   //LOADING
-  if (isLoading) {
+  if (isFetching) {
     return <p>LOADING...</p>;
   }
 
@@ -27,7 +25,7 @@ export const Board = () => {
   const notCompleted = data.filter((item) => !item.completed);
 
   return (
-    <Paper elevation={4} sx={{ p: 2.5, maxWidth: { xs: "none", md: "53%" } }}>
+    <Paper elevation={4} sx={{ p: 2.5, maxWidth: { xs: "none" } }}>
       <TaskList title="Active tasks" tasks={notCompleted} />
       <TaskList title="Completed tasks" tasks={completed} />
     </Paper>

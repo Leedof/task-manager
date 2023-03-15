@@ -6,8 +6,14 @@ import { makeUsername } from "./../../helpers/makeUsername";
 import { useSelector } from "react-redux";
 import { selectEmail } from "../../../../store";
 
-export const Header = ({ handleDrawerToggle, handleModalOpen }) => {
+export const Header = ({ setMobileNavbar, setModalCreateTask }) => {
   const email = useSelector(selectEmail);
+  const handlerOpenMobileNavbar = () => {
+    setMobileNavbar(true);
+  };
+  const handlerOpenCreateTaskModal = () => {
+    setModalCreateTask(true);
+  };
   return (
     <AppBar
       position="fixed"
@@ -33,7 +39,7 @@ export const Header = ({ handleDrawerToggle, handleModalOpen }) => {
           aria-label="open drawer"
           color="primary"
           edge="start"
-          onClick={handleDrawerToggle}
+          onClick={handlerOpenMobileNavbar}
           sx={{ display: { xs: "flex", sm: "none" }, ml: 0 }}
         >
           <MenuIcon fontSize="large" />
@@ -42,7 +48,7 @@ export const Header = ({ handleDrawerToggle, handleModalOpen }) => {
         <PrimaryBtn
           variant="contained"
           startIcon={<AddCircleOutlineOutlinedIcon />}
-          onClick={handleModalOpen}
+          onClick={handlerOpenCreateTaskModal}
           sx={{ flex: "0 0 160px" }}
         >
           Create task

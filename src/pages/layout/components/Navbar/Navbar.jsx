@@ -5,8 +5,14 @@ import { SingOutBtn } from "../../../../UI/SingOutBtn/SingOutBtn";
 import { signOut } from "../../../../store";
 import { useDispatch } from "react-redux";
 
-export const Navbar = ({ mobileOpen, handleDrawerToggle }) => {
+export const Navbar = ({ mobileNavbar, setMobileNavbar }) => {
   const dispatch = useDispatch();
+  const handlerOpenMobileNavbar = () => {
+    setMobileNavbar(true);
+  };
+  const handlerCloseMobileNavbar = () => {
+    setMobileNavbar(false);
+  };
 
   const drawer = (
     <>
@@ -20,7 +26,7 @@ export const Navbar = ({ mobileOpen, handleDrawerToggle }) => {
       >
         <Logo sx={{ display: "flex", height: "100%" }} />
       </Toolbar>
-      <BoardsList handleDrawerToggle={handleDrawerToggle} />
+      <BoardsList handlerCloseMobileNavbar={handlerCloseMobileNavbar} />
       <SingOutBtn
         onClickHandler={() => {
           dispatch(signOut());
@@ -32,8 +38,8 @@ export const Navbar = ({ mobileOpen, handleDrawerToggle }) => {
     <>
       <Drawer
         variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
+        open={mobileNavbar}
+        onClose={handlerCloseMobileNavbar}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
