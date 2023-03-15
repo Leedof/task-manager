@@ -7,9 +7,6 @@ import { useDispatch } from "react-redux";
 
 export const Navbar = ({ mobileNavbar, setMobileNavbar }) => {
   const dispatch = useDispatch();
-  const handlerOpenMobileNavbar = () => {
-    setMobileNavbar(true);
-  };
   const handlerCloseMobileNavbar = () => {
     setMobileNavbar(false);
   };

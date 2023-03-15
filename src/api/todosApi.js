@@ -1,6 +1,13 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { db } from "../firebase";
-import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  deleteDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 export const todosApi = createApi({
   reducerPath: "todosApi",
@@ -39,13 +46,15 @@ export const todosApi = createApi({
           return { error: err };
         }
       },
-      providesTags: (result) =>
-        result
+      providesTags: (result, error, arg) => {
+        // console.log(result, error, arg);
+        return result
           ? [
               ...result.map(({ id }) => ({ type: "Task", id })),
               { type: "Task", id: "LIST" },
             ]
-          : [{ type: "Task", id: "LIST" }],
+          : [{ type: "Task", id: "LIST" }];
+      },
     }),
     addTask: builder.mutation({
       async queryFn(arg) {
@@ -62,7 +71,49 @@ export const todosApi = createApi({
       },
       invalidatesTags: [{ type: "Task", id: "LIST" }],
     }),
+    updateTask: builder.mutation({
+      async queryFn(arg) {
+        const { uid, board, taskId, taskData } = arg;
+        try {
+          await updateDoc(
+            doc(db, "users", uid, "boards", board, "tasks", taskId),
+            {
+              ...taskData,
+            }
+          );
+
+          return { status: "Success" };
+        } catch (error) {
+          return { err: error };
+        }
+      },
+      // Handle completed status
+      invalidatesTags: (result, error, arg) => {
+        return "completed" in arg.taskData
+          ? [{ type: "Task", id: "LIST" }]
+          : [{ type: "Task", id: arg.taskId }];
+      },
+    }),
+    deleteTask: builder.mutation({
+      async queryFn(arg) {
+        const { uid, board, taskId } = arg;
+        try {
+          await deleteDoc(
+            doc(db, "users", uid, "boards", board, "tasks", taskId)
+          );
+          return { status: "Success" };
+        } catch (error) {
+          return { err: error };
+        }
+      },
+      invalidatesTags: [{ type: "Task", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetTasksQuery, useAddTaskMutation } = todosApi;
+export const {
+  useGetTasksQuery,
+  useAddTaskMutation,
+  useUpdateTaskMutation,
+  useDeleteTaskMutation,
+} = todosApi;

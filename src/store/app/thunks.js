@@ -27,7 +27,6 @@ export const signUp = createAsyncThunk(
   async function ({ email, password }, { dispatch }) {
     try {
       const data = await appAPI.signUpAPI(email, password);
-      console.log(data);
       dispatch(
         setUser({
           uid: data.user.uid,

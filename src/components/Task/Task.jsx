@@ -10,8 +10,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { TaskDeadline } from "../../UI/TaskDeadline/TaskDeadline";
 import { TaskCheckbox } from "./../../UI/TaskCheckbox";
 import { convertTimestamp } from "../../helpers";
+import { useUid, useBoard } from "./../../hooks";
 
-export const Task = ({ task }) => {
+export const Task = ({ task, updateTask, deleteTask }) => {
+  const uid = useUid();
+  const { path } = useBoard();
+  const toggleCompletedTask = async () => {
+    await updateTask({
+      uid,
+      board: path,
+      taskId: task.id,
+      taskData: { completed: !task.completed },
+    });
+  };
+  const handlerDeleteTask = async () => {
+    deleteTask({ uid, board: path, taskId: task.id });
+  };
   return (
     <Accordion
       disableGutters
@@ -26,6 +40,12 @@ export const Task = ({ task }) => {
         "&:hover": {
           bgcolor: "rgba(41, 161, 156, 0.02)",
         },
+        "&:not(:last-child)": {
+          mb: 1,
+        },
+        "&::before": {
+          bgcolor: "transparent",
+        },
       }}
     >
       <AccordionSummary
@@ -37,7 +57,11 @@ export const Task = ({ task }) => {
           },
         }}
       >
-        <TaskCheckbox sx={{ mr: 1.2 }} />
+        <TaskCheckbox
+          sx={{ mr: 1.2 }}
+          checked={task.completed}
+          onChange={toggleCompletedTask}
+        />
         <Typography
           component="span"
           sx={{
@@ -58,7 +82,7 @@ export const Task = ({ task }) => {
           Description
         </Typography>
         <Typography component="p" sx={{ wordWrap: "break-word", mb: 1.5 }}>
-          {task.description}
+          {task.description || "None"}
         </Typography>
         <Box
           sx={{
@@ -70,7 +94,12 @@ export const Task = ({ task }) => {
           <Typography component="span" color="grey" fontSize={14}>
             {"Created: " + convertTimestamp(task.created)}
           </Typography>
-          <IconButton color="error" size="large" sx={{ p: 1 }}>
+          <IconButton
+            color="error"
+            size="large"
+            sx={{ p: 1 }}
+            onClick={handlerDeleteTask}
+          >
             <DeleteIcon />
           </IconButton>
         </Box>

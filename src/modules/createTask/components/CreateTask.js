@@ -1,5 +1,5 @@
 //Hooks
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUid, useBoard } from "./../../../hooks";
 //helpers
@@ -9,23 +9,30 @@ import dayjs from "dayjs";
 //API
 import { useAddTaskMutation } from "../../../api/todosApi";
 //UI
-import { Box, Dialog, Typography } from "@mui/material";
+import {
+  Box,
+  Dialog,
+  Typography,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
 import { CloseBtn } from "../../../UI/CloseBtn";
 import { FormInputText } from "../../../components/FormInputText";
 import { PrimaryBtn } from "../../../UI/PrimaryBtn";
 import { FormDatePicker } from "../../../components/FormDatePicker";
 import { FormSelect } from "../../../components/FormSelect/FormSelect";
-import { FormError } from "../../../components/FormError";
 
 export const CreateTask = ({ modalCreateTask, setModalCreateTask }) => {
+  const [responseProps, setResponseProps] = useState({ type: "", message: "" });
   const handlerCloseModalCreateTask = () => {
     setModalCreateTask(false);
   };
+
   //Get current location data
   const uid = useUid();
   const { board } = useBoard();
-  const [addTask, result] = useAddTaskMutation();
 
+  const [addTask, responseResult] = useAddTaskMutation();
   const { control, handleSubmit, reset, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -42,20 +49,44 @@ export const CreateTask = ({ modalCreateTask, setModalCreateTask }) => {
       title: values.title,
       description: values.description,
       deadline: values.deadline.toDate(),
+      completed: false,
       created: new Date(),
     };
     const currentBoard = values.board.toLowerCase();
     //fetch
     await addTask({ uid, board: currentBoard, taskData });
-
-    reset({
-      title: "",
-      desctiption: "",
-    });
-    result.reset();
-    handlerCloseModalCreateTask();
+  };
+  const clearState = () => {
+    setTimeout(() => {
+      responseResult.reset();
+      handlerCloseModalCreateTask();
+      reset({
+        title: "",
+        desctiption: "",
+      });
+    }, 500);
   };
 
+  //Handle response status
+  useEffect(() => {
+    if (responseResult.isSuccess) {
+      setResponseProps({
+        type: "success",
+        message: "Successfully created task",
+      });
+      clearState();
+    }
+    if (responseResult.isError) {
+      setResponseProps({ type: "error", message: "Error! Try again later" });
+      clearState();
+    }
+
+    return () => {
+      setResponseProps({ type: "", message: "" });
+    };
+  }, [responseResult.isSuccess, responseResult.isError]);
+
+  //Keep actual board in form state
   useEffect(() => {
     setValue("board", board);
   }, [board, setValue]);
@@ -127,24 +158,21 @@ export const CreateTask = ({ modalCreateTask, setModalCreateTask }) => {
           </Box>
         </Box>
         {/* Form Actions */}
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
           <PrimaryBtn variant="contained" type="submit">
             Save
           </PrimaryBtn>
         </Box>
-        <FormError
-          isSubmitting={result.isLoading}
-          isSubmitSuccessful={result.isSuccess}
-          error={result.isError && "Ops, error :("}
-        />
+        {/* Response handler */}
+        <Box>
+          {responseResult.isLoading && <CircularProgress />}
+          {(responseResult.isSuccess || responseResult.isError) && (
+            <Alert severity={responseProps?.type || "info"}>
+              {responseProps.message}
+            </Alert>
+          )}
+        </Box>
       </Box>
-      <button
-        onClick={() => {
-          result.reset();
-        }}
-      >
-        reset
-      </button>
     </Dialog>
   );
 };
