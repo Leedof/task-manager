@@ -61,6 +61,13 @@ export const LoginForm = () => {
         isSubmitSuccessful={isSubmitSuccessful}
         error={errors.root?.serverError.status}
       />
+      <Typography sx={{ fontSize: "14px", color: "grey" }}>
+        Kindly use these credentials:
+        <br />
+        Login: test@gmail.com
+        <br />
+        Password: 123456
+      </Typography>
     </FormWrapperAuth>
   );
 };
