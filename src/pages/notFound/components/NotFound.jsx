@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Paper, Typography, Box, Button } from "@mui/material";
+import {  Typography, Box, Button } from "@mui/material";
 
 export const NotFound = () => {
   const navigate = useNavigate();
