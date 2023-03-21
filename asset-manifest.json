@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/todo-app/static/js/main.86a911bd.js",
-    "static/media/logo.svg": "/todo-app/static/media/logo.720fbe103a89592d13c5bc03e8ae19af.svg",
-    "index.html": "/todo-app/index.html",
-    "main.86a911bd.js.map": "/todo-app/static/js/main.86a911bd.js.map"
+    "main.js": "/task-manager/static/js/main.58fcf946.js",
+    "static/media/logo.svg": "/task-manager/static/media/logo.720fbe103a89592d13c5bc03e8ae19af.svg",
+    "index.html": "/task-manager/index.html",
+    "main.58fcf946.js.map": "/task-manager/static/js/main.58fcf946.js.map"
   },
   "entrypoints": [
-    "static/js/main.86a911bd.js"
+    "static/js/main.58fcf946.js"
   ]
 }
